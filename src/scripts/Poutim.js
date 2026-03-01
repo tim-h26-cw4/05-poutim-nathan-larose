@@ -17,22 +17,46 @@ export default class Poutim{
     }
 
     selecType(event){
+        const button = event.currentTarget;
+ 
+        if (button.classList.contains('is-active')) {
+            button.classList.remove('is-active');
+
+            this.selectedType = "";
+
+            this.updatePhoto();
+
+            return;
+        }
+        
         for (let i = 0; i < this.types.length; i++) {
             const type = this.types[i];
             type.classList.remove('is-active');
+            
         }
-        event.currentTarget.classList.add('is-active');
+        
+        button.classList.add('is-active');
 
-        const text =  event.currentTarget.innerText;
+        const text =  button.innerText;
         this.selectedType = text;
 
         this.updatePhoto();
+
     }
 
     updatePhoto(){
         const image = this.element.querySelector(".poutine__image");
 
-        image.classList.add('is-active');
+        if(this.selectedType != ""){
+            image.classList.add('is-active');
+
+        } 
+        else{
+            this.selectedType = "poutine";
+            image.classList.remove('is-active');
+            
+        }
+
         image.src = `assets/images/${this.selectedType}.png`;
     
     }   
